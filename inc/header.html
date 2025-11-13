@@ -1,0 +1,70 @@
+<?php
+    include_once $_SERVER['DOCUMENT_ROOT'].'/_yeriel/inc/yeriel.php';
+
+    // language set
+    $lang_gb = substr($_SERVER['REQUEST_URI'],1,2);
+    $lang_href = ($lang_gb=='kr') ? str_replace('/kr','/en',$_SERVER['SCRIPT_NAME']) : str_replace('/en','/kr',$_SERVER['SCRIPT_NAME']);
+
+    $script_path = $_SERVER['SCRIPT_NAME'];
+    $parts = explode('/', trim($script_path, '/'));
+    $current_page = 'index';
+    if(count($parts) >= 3 && end($parts) === 'index.html') $current_page = $parts[1];
+    elseif(count($parts) == 2 && end($parts) === 'index.html') $current_page = 'index';
+    else $current_page = basename($script_path, '.html');
+
+    $page_css_map = ['index' => 'main', 'test' => 'main', 'gallery' => 'works'];
+    $css_name = $page_css_map[$current_page] ?? $current_page;
+    $css_path = "/_static/css/{$css_name}.css";
+?>
+<!DOCTYPE html>
+<html lang="kor">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YERIEL IS REAL</title>
+
+    <!-- font-awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <!-- swiper -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.js"></script>
+
+    <!-- reset / 공용 CSS -->
+    <link rel="stylesheet" href="/_yeriel/css/reset?date=20230320" />
+    <link rel="stylesheet" href="/_static/css/common.css?date=<?=time();?>" />
+
+    <!-- 페이지별 CSS -->
+    <?php if(file_exists($_SERVER['DOCUMENT_ROOT'] . $css_path)): ?>
+        <link rel="stylesheet" href="<?= $css_path ?>?v=<?= time() ?>" />
+    <?php endif; ?>
+</head>
+
+<!-- body에 data-page 추가 -->
+<body>
+
+  <!-- Loader -->
+  <div id="loader_wrapper">
+    <p>Loading...</p>
+  </div>
+
+  <header>
+    <nav>
+      <a href="/<?=$lang_gb?>/" id="header_logo"><img src="/_static/asset/img/logo_wh.svg" alt="logo" /></a>
+      <a href="javascript:void(0);" id='btn_menu'><div class="hamberger"></div></a>
+      <div id="menu_overlay"></div>
+      <div id="main_menu">
+        <div id="btn_close_menu"><button type="button"></button></div>
+        <ul>
+          <li><a href="/<?=$lang_gb?>/" class="<?= $current_page == 'index' ? 'active' : '' ?>">main</a></li>
+          <li><a href="/<?=$lang_gb?>/about/" class="<?= $current_page == 'about' ? 'active' : '' ?>">about</a></li>
+          <li><a href="/<?=$lang_gb?>/works/" class="<?= $current_page == 'works' ? 'active' : '' ?>">works</a></li>
+          <li><a href="<?=$lang_href?>">to <?= $lang_gb=='kr'? "english":"korean" ?> site</a></li>            
+        </ul>
+      </div>
+    </nav>          
+  </header>
+
+  <!-- wrap start -->
+  <div id='wrap'>

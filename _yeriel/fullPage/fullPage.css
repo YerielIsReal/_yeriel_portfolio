@@ -1,0 +1,35 @@
+* {
+  box-sizing: border-box; 
+}
+
+html,
+body {
+  height: 100%; 
+  margin: 0;
+  padding: 0;
+}
+
+.fullpage-active-js {
+  height: 100%;
+  overflow: hidden; 
+  font-family: 'Arial', sans-serif;
+}
+
+#fullpage-wrapper {
+  height: 100%;
+  width: 100%; 
+  position: fixed; 
+  top: 0; 
+  left: 0;
+  will-change: transform;
+  transition-duration: 0ms;
+}
+
+.section {
+  height: 100%;
+  position: relative; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}

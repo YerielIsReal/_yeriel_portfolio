@@ -1,0 +1,185 @@
+<?
+  include_once $_SERVER['DOCUMENT_ROOT'].'/inc/header.html';
+
+  $my->conn();
+  $v['about']  = $my->get("SELECT * FROM about LIMIT 1");
+  $v['lang']   = $my->gets("SELECT * FROM about_lan");
+  $v['certi']  = $my->gets("SELECT * FROM about_cer");
+  $v['edu']    = $my->gets("SELECT * FROM about_edu");
+  $v['career'] = $my->gets("SELECT * FROM career WHERE gb='{$lang_gb}' ORDER BY uid DESC");
+  $my->stop();
+?>
+
+<div id="about_bg">
+  <svg viewBox="0 0 100 100" preserveAspectRatio="xMidYMid slice">
+    <defs>
+      <radialGradient id="GradientPink" cx="50%" cy="50%" fx="0.5%" fy="50%" r=".5">
+        <animate attributeName="fx" dur="24s" values="0%;3%;0%" repeatCount="indefinite" />
+        <stop offset="0%" stop-color="var(--pink)" stop-opacity="0.4" />
+        <stop offset="100%" stop-color="var(--pink)" stop-opacity="0" />
+      </radialGradient>
+      <radialGradient id="GradientGreen" cx="50%" cy="50%" fx="0.5%" fy="50%" r=".5">
+        <animate attributeName="fx" dur="28s" values="0%;5%;0%" repeatCount="indefinite" />
+        <stop offset="0%" stop-color="var(--green)" stop-opacity="0.4" />
+        <stop offset="100%" stop-color="var(--green)" stop-opacity="0" />
+      </radialGradient>
+    </defs>
+    <rect x="10%" y="5%" width="100%" height="100%" fill="url(#GradientPink)" transform="rotate(340 50 50)" opacity="0.7">
+      <animate attributeName="x" dur="20s" values="25%;0%;25%" repeatCount="indefinite" />
+      <animate attributeName="y" dur="21s" values="0%;25%;0%" repeatCount="indefinite" />
+      <animateTransform attributeName="transform" type="rotate" from="0 50 50" to="360 50 50" dur="10s" repeatCount="indefinite" />
+    </rect>
+    <rect x="0%" y="30%" width="100%" height="100%" fill="url(#GradientGreen)" transform="rotate(260 50 50)" opacity="0.7">
+      <animate attributeName="x" dur="23s" values="-25%;0%;-25%" repeatCount="indefinite" />
+      <animate attributeName="y" dur="24s" values="0%;50%;0%" repeatCount="indefinite" />
+      <animateTransform attributeName="transform" type="rotate" from="360 50 50" to="0 50 50" dur="14s" repeatCount="indefinite" />
+    </rect>
+  </svg>
+</div>
+
+<section id="about_top" class="no_scroll_event">
+  <div id="my_wrap">
+    <div id="about_left">
+      <img src="/_static/asset/upload/about/<?=$v['about']['img']?>" alt="myImg">
+    </div>
+    <div id="about_right">
+      I'm
+      <div class="name">
+        <span>yejin kim</span>
+        <span>yeriel kim</span>
+      </div><br>
+      Based in<br>
+      <span class="country">south korea</span>
+    </div>
+  </div>
+</section>
+
+<div id="about_wrap" class="container">
+  <section id="about_info" class="section">
+    <div class="section_title">Profile</div>
+    <div id="about_info_wrap">
+      <div>
+        <div class="info_section">
+          <h5 class="info_title">personal info</h5>
+          <p class="info_conts">
+            <span class="tag">name</span><?=$v['about']['name_'.$lang_gb]?><br><br>
+            <span class="tag">birth</span><?=$v['about']['birth']?><br><br>
+            <span class="tag">location</span><?=$lang_gb=='kr'?'서울시 용산구':'Seoul, South Korea'?><br><br>
+            <span class="tag">contact</span><?=$v['about']['contact']?>
+          </p>
+        </div>
+        <div class="info_section">
+          <h5 class="info_title">language</h5>
+          <p class="info_conts">
+            <?
+              foreach($v['lang'] AS $n=>$lan){
+                if($n)  echo '<br><br>';
+                echo $lan['lan_'.$lang_gb];
+              }
+            ?>            
+          </p>
+        </div>
+      </div>
+
+      <div>
+        <div class="info_section">
+          <h5 class="info_title">certification</h5>
+          <p class="info_conts">
+            <?
+              foreach($v['certi'] AS $n=>$cer){
+                if($n)  echo '<br><br>';
+                ?><span class="tag"><?=$cer['date']?></span><?=$cer['type_'.$lang_gb]?><?
+              }
+            ?>            
+          </p>
+        </div>
+        <div class="info_section">
+          <h5 class="info_title">education</h5>
+          <p class="info_conts">
+            <?
+              $n=0;
+              foreach($v['edu'] AS $edu){
+                ?>
+                  [ <?=$edu['ins_'.$lang_gb]?> ]　<span class="date"><?=$edu['date']?></span><br><br>
+                  <?=$edu['cont_'.$lang_gb]?>
+                <?
+                $n++;
+                if($n != sizeof($v['edu'])) echo "<br><br><br>";
+              }
+            ?>          
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section_title">Career</div>
+    <div id="career_slide" class="swiper grain_box">
+      <div class="swiper-wrapper">
+        <?
+          $n=0;
+          foreach($v['career'] AS $car){
+            $n++;
+            ?>
+            <div class="swiper-slide">
+              <div class="career_wrap">
+                <div class="info_title">
+                    <?=$car['company']?> ( <?=$car['date_s']?> - <?=$car['date_e']?> )
+                </div>
+                <div class="info_conts"><?=$car['conts']?></div>
+              </div>
+            </div>
+            <?
+          }
+        ?>
+      </div>
+      <?
+        if(sizeof($v['career']) > 0) {
+          ?>
+          <div class="swiper-pagination"></div>
+          <div class="swiper-button-prev"></div>
+          <div class="swiper-button-next"></div>
+          <?
+        }
+      ?>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section_title">skills</div>
+    <div id="skill_wrap">
+      <div>
+        <img src="/_static/asset/img/about/html.png" alt="skill">
+      </div>
+      <div>
+        <img src="/_static/asset/img/about/css.png" alt="skill">
+      </div>
+      <div>
+        <img src="/_static/asset/img/about/js.png" alt="skill">
+      </div>
+      <div>
+        <img src="/_static/asset/img/about/mysql.png" alt="skill">
+      </div>
+      <div>
+        <img src="/_static/asset/img/about/php.png" alt="skill">
+      </div>
+      <div>
+        <img src="/_static/asset/img/about/ai.png" alt="skill">
+      </div>
+      <div>
+        <img src="/_static/asset/img/about/ps.png" alt="skill">
+      </div>
+      <div>
+        <img src="/_static/asset/img/about/figma.png" alt="skill">
+      </div>
+      <div>
+        <img src="/_static/asset/img/about/git.png" alt="skill">
+      </div>
+    </div>
+  </section>
+</div>
+
+<?
+  include_once $_SERVER['DOCUMENT_ROOT'].'/inc/footer.html';
+?>

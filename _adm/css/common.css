@@ -1,0 +1,40 @@
+@charset "utf-8";
+
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&display=swap');
+
+body{color:#344767; font-family:'Nanum Gothic', sans-serif;}
+.text-pink{color:var(--bs-pink);}
+#status{border:3px solid red; width:100%;}
+
+
+/* argon ignore */
+/* input group border / focus border */
+.input-group>:not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback){
+    border-left:1px solid var(--bs-light) !important;
+}
+.input-group>:not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback):focus{border-left:1px solid #5e72e4!important;}
+.input-group .form-control:focus{border-left:1px solid #5e72e4!important;}
+.sidenav{z-index:999 !important;}
+
+.modal .btn-close{color:#495057; font-size:28px; margin-top:-24px;}
+.modal .btn{margin-bottom:0;}
+
+.pagination li.active a{color:#fff !important;}
+
+/* img preview dummy */
+.preview_box{
+    position: relative;
+    display:flex; justify-content:center; align-items:center; 
+    overflow:hidden;
+    background:#f8f9fa;
+}
+.preview_box::before{
+    content:'';
+    position: absolute; top: 0; left: 0;
+    width:100%; height:100%;
+    background:url('/asset/img/logo_bk.png') no-repeat center;
+    opacity:0.2;
+    z-index:0;
+}
+
+.preview_box img{width:100%; z-index:0;}

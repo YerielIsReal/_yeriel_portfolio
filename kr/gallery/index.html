@@ -1,0 +1,24 @@
+<?
+  include_once $_SERVER['DOCUMENT_ROOT'].'/inc/header.html';
+
+  $my->conn();
+  $view = $my->gets("SELECT * FROM gallery");
+  $my->stop();
+?>
+
+<h1 class="gal_title gallery_title">gallery</h1>
+
+<div class="gal_wrap">
+  <?
+    foreach($view AS $v){
+      ?>
+      <a href="javascript:void(0);" onclick="modal_works('<?=$v['uid']?>')" class="gal_box">
+        <img src="/_static/asset/upload/works/<?=$v['thumb_s']?>" alt="works">
+        <p class="work_nm"><?=$v['title']?></p>
+      </a>
+      <?
+    }
+  ?>
+</div>
+
+<? include_once $_SERVER['DOCUMENT_ROOT'].'/inc/footer.html'; ?>

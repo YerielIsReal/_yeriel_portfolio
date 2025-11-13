@@ -1,0 +1,43 @@
+
+    </div> 
+    <!-- // wrap end -->
+
+    <!-- core -->
+    <script src="/_yeriel/js/jquery.min.js"></script>
+    <script src="/_yeriel/js/jquery.form.js"></script>
+    <script src="/_yeriel/js/yeriel.js"></script>
+    <script src="/_static/js/common.js?v=<?= time() ?>"></script>
+    <?
+      $script_path = $_SERVER['SCRIPT_NAME'];
+      $parts = explode('/', trim($script_path, '/'));
+
+      $current_page = 'index';
+
+      // /kr/다음에 폴더가 있으면 그것을 페이지명으로 사용
+      if (count($parts) >= 3 && end($parts) === 'index.html') {
+        $current_page = $parts[1];
+      } elseif (count($parts) == 2 && end($parts) === 'index.html') {
+        $current_page = 'index';
+      } else {
+        // index.html이 아닌 파일
+        $current_page = basename($script_path, '.html');
+      }
+
+      // index는 main.js로 매핑
+      $page_js_map = [
+        'index' => 'main',
+        'test' => 'main'
+      ];
+
+      $js_name = $page_js_map[$current_page] ?? $current_page;
+      $js_path = "/_static/js/{$js_name}.js";
+
+      if (file_exists($_SERVER['DOCUMENT_ROOT'] . $js_path)) :
+        ?>
+          <script src="<?= $js_path ?>?v=<?= time() ?>"></script>
+        <?
+      endif;
+    ?>
+
+</body>
+</html>

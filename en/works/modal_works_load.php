@@ -1,0 +1,1 @@
+<? include_once $_SERVER['DOCUMENT_ROOT'].'/kr/works/modal_works_load.php'; ?>

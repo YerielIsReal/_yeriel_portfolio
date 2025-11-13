@@ -1,0 +1,67 @@
+<? 
+    include_once $_SERVER['DOCUMENT_ROOT'].'/inc/header.html';
+
+    $my->conn();
+    $works = $my->gets("SELECT * FROM works WHERE thumb_l!='' ORDER BY uid DESC");
+    $my->stop();
+?>
+
+  <? include_once $_SERVER['DOCUMENT_ROOT'].'/inc/main_background.html'; ?>
+
+
+  <section id="section1" class="section main_section no_scroll_event">
+    <img id="main_logo" class="main_logos" src="/_static/asset/img/main_logo.png">
+    <img id="main_logo_mobile" class="main_logos" src="/_static/asset/img/main_logo_mobile.png">
+  </section>
+
+  <section id="section2" class="section main_section">
+    <div id="work_slide" class="swiper grain_box">
+      <div class="swiper-wrapper">
+        <?
+          $n=0;
+          foreach($works AS $v){
+            $n++;
+            ?>
+            <div class="swiper-slide">
+              <div class="work_wrap">
+                <a href="./works/index.html?id=<?=$v['uid']?>" class="work_img gal_box animated"><img src="/_static/asset/upload/works/<?=$v['thumb_l']?>" alt="work_<?=$v['uid']?>"></a>
+                <div class="work_title_wrap">
+                  <div>
+                    <div class="work_title"><?=$v['title']?></div>
+                    <div class="work_position"><?=$v['position']?></div>                    
+                  </div>
+                  <a href="./works/index.html?id=<?=$v['uid']?>" class="btn_detail">
+                    view detail
+                    <span class="arrow"></span>
+                  </a>
+                </div>
+              </div>
+            </div>
+            <?
+          }
+        ?>
+      </div>
+      <div class="swiper-pagination"></div>
+      <div class="swiper-button-prev"></div>
+      <div class="swiper-button-next"></div>
+    </div>
+  </section>
+
+  <section id="section3" class="section main_section">
+    <a href="./about/" class="spinner_box">
+      <div class="btn_more_text">more<br>about<br>me</div>
+      <div class="circle_border circle_border_pink">
+        <div class="circle_core"></div>
+      </div>      
+    </a>
+    <a href="./works/" class="spinner_box">
+      <div class="btn_more_text">more<br>works</div>
+      <div class="circle_border circle_border_green">
+        <div class="circle_core"></div>
+      </div>
+    </a>
+  </section>
+
+
+
+<? include_once $_SERVER['DOCUMENT_ROOT'].'/inc/footer.html'; ?>
