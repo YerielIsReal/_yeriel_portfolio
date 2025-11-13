@@ -173,6 +173,22 @@
   width: 30%;
 }
 
+@media (max-width: 1024px) {
+  #about_info_wrap {
+    flex-direction: column;
+  }
+
+  #about_info_wrap > div{
+    width: 100%;
+    padding: 50px 60px;
+  }
+
+  #about_info_wrap .info_conts .tag{
+    width: 80px;
+    margin-right: 20px;
+  }
+}
+
 @media (max-width: 768px){
   #about_top #my_wrap{
     flex-direction: column;
@@ -191,21 +207,7 @@
 
   #about_wrap .section.visible .section_title {
     transform: translateY(10px);
-  }  
-
-  #about_info_wrap {
-    flex-direction: column;
   }
-
-  #about_info_wrap > div{
-    width: 100%;
-    padding: 50px 60px;
-  }
-
-  #about_info_wrap .info_conts .tag{
-    width: 80px;
-    margin-right: 20px;
-  }  
 
   #skill_wrap > div {
     width: calc(50% - 30px);
